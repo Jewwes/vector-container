@@ -157,11 +157,11 @@ public:
             data_.Swap(new_data);
         }
         else {
-            T value_to_insert(std::forward<Args>(args)...); // создаем объект непосредственно по месту
-            T* target = end(); // указатель на конец вектора
-            new (target) T(std::move(data_[size_ - 1])); // перемещаем последний элемент на новое место
-            std::move_backward(data_.GetAddress() + position, end() - 1, end()); // сдвигаем элементы вправо
-            data_[position] = std::move(value_to_insert); // вставляем новый элемент на нужную позицию
+            T value_to_insert(std::forward<Args>(args)...); 
+            T* target = end(); 
+            new (target) T(std::move(data_[size_ - 1])); 
+            std::move_backward(data_.GetAddress() + position, end() - 1, end()); 
+            data_[position] = std::move(value_to_insert);
         }
         ++size_;
         return begin() + position;
