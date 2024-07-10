@@ -6,7 +6,6 @@
 
 namespace {
 
-// "Магическое" число, используемое для отслеживания живости объекта
 inline const uint32_t DEFAULT_COOKIE = 0xdeadbeef;
 
 struct TestObj {
@@ -165,7 +164,6 @@ void Test2() {
             assert(false && "Exception is expected");
         } catch (const std::runtime_error&) {
         } catch (...) {
-            // Unexpected error
             assert(false && "Unexpected exception");
         }
         assert(Obj::num_default_constructed == SIZE / 2 - 1);
@@ -181,7 +179,6 @@ void Test2() {
         } catch (const std::runtime_error&) {
             assert(Obj::num_copied == SIZE / 2);
         } catch (...) {
-            // Unexpected error
             assert(false && "Unexpected exception");
         }
         assert(Obj::GetAliveObjectCount() == SIZE);
@@ -336,8 +333,6 @@ void Test4() {
     {
         Vector<TestObj> v(1);
         assert(v.Size() == v.Capacity());
-        // Операция PushBack существующего элемента вектора должна быть безопасна
-        // даже при реаллокации памии
         v.PushBack(v[0]);
         assert(v[0].IsAlive());
         assert(v[1].IsAlive());
@@ -345,8 +340,6 @@ void Test4() {
     {
         Vector<TestObj> v(1);
         assert(v.Size() == v.Capacity());
-        // Операция PushBack для перемещения существующего элемента вектора должна быть безопасна
-        // даже при реаллокации памяти
         v.PushBack(std::move(v[0]));
         assert(v[0].IsAlive());
         assert(v[1].IsAlive());
@@ -372,8 +365,6 @@ void Test5() {
     {
         Vector<TestObj> v(1);
         assert(v.Size() == v.Capacity());
-        // Операция EmplaceBack существующего элемента вектора должна быть безопасна
-        // даже при реаллокации памяти
         v.EmplaceBack(v[0]);
         assert(v[0].IsAlive());
         assert(v[1].IsAlive());
